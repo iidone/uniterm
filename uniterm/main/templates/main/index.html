@@ -1,0 +1,786 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}Купить кондиционер в Минске с установкой | Uniterm - Гарантия 7 лет{% endblock %}
+
+{% block meta_description %}Купить кондиционер в Минске с установкой за 1 день. Продажа сплит-систем Daikin, Midea, Gree. Бесплатная доставка. Гарантия до 7 лет. Цены от производителя.{% endblock %}
+
+{% block meta_keywords %}кондиционер купить Минск, сплит система цена, установка кондиционеров, монтаж кондиционера, климатическое оборудование Беларусь{% endblock %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'main/css/social_buttons.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title animate-on-scroll">🌡️ Приобретите кондиционер в Минске и </h1>
+        <h1 class="hero-title animate-on-scroll red">НЕ ПАРЬТЕСЬ!</h1>
+        <p class="hero-subtitle animate-on-scroll">Быстрая доставка, установка за 1 день, гарантия до 7 лет и скидки до 30%</p>
+        <button class="hero-button animate-on-scroll">Подобрать кондиционер за 5 минут и получить скидку</button>
+    </div>
+
+  <div class="air-conditioners">
+    <img
+      src="{% static 'main/images/air1.png' %}"
+      alt="Кондиционер 1"
+      class="ac-image ac-1 scroll-animate"
+    />
+    <img
+      src="{% static 'main/images/air2.png' %}"
+      alt="Кондиционер 2"
+      class="ac-image ac-2 scroll-animate"
+    />
+  </div>
+</section>
+
+<section class="best-sellers-section">
+  <div class="best-sellers-container">
+    <div class="section-header">
+      <h2 class="section-title">🔥 Хиты продаж</h2>
+      <p class="section-subtitle">Лучшее соотношение цены и качества</p>
+    </div>
+
+    <div class="products-grid">
+      {% for product in hit_products %}
+      <div class="product-card">
+        <a href="{% url 'product_detail' product.id %}">
+          <div class="product-badge">Хит</div>
+          <div class="product-image">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <p class="product-model">{{ product.brand }}</p>
+            <div class="product-features">
+              <span class="feature">⚡ A+++</span>
+              <span class="feature">🔊 {{ product.noise_level }} дБ</span>
+              {% if product.wifi %}
+              <span class="feature">📶 Wi-Fi</span>
+              {% endif %}
+            </div>
+            <div class="product-price">
+              <span class="current-price">{{ product.price }} BYN</span>
+            </div>
+            <div class="product-actions">
+              <a href="{% url 'product_detail' product.id %}">
+                <button class="buy-button">Купить</button>
+              </a>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="view-all-container">
+      <a href="{% url 'catalog' %}" class="view-all-button">
+        Смотреть все товары →
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="advantages-block">
+  <ul>
+    <li class="animate-on-scroll">
+      <i class="fas fa-truck fa-2x"></i>
+      <h3>Бесплатная доставка</h3>
+      <p>По Минску.</p>
+    </li>
+    <li class="animate-on-scroll">
+      <i class="fas fa-wrench fa-2x"></i>
+      <h3>Установка за 1 день</h3>
+      <p>Быстрая и качественная установка оборудования</p>
+    </li>
+    <li class="animate-on-scroll">
+      <i class="fas fa-shield-alt fa-2x"></i>
+      <h3>Гарантия до 7 лет</h3>
+      <p>Длительная гарантия на все оборудование и работы</p>
+    </li>
+    <li class="animate-on-scroll">
+      <i class="fas fa-money-bill-wave fa-2x"></i>
+      <h3>Скидки до 30%</h3>
+      <p>Специальные предложения и акционные цены</p>
+    </li>
+  </ul>
+</div>
+
+<section class="delivery-section" id="delivery-section">
+  <div class="delivery-container">
+    <div class="delivery-header">
+      <h2 class="delivery-title">🚚 Доставка</h2>
+      <p class="delivery-subtitle">
+        Наш интернет-магазин uniterm.by обеспечивает быструю и надёжную доставку
+        кондиционеров по Минску и Минской области.
+      </p>
+    </div>
+
+    <div class="delivery-content" style="user-select: none">
+      <div class="delivery-methods">
+        <h3>Способы доставки</h3>
+        <div class="methods-grid">
+          <div class="method-card">
+            <i class="fas fa-car"></i>
+            <h4>Курьерская доставка по Минску</h4>
+            <p class="method-price">Бесплатно</p>
+          </div>
+          <div class="method-card">
+            <i class="fas fa-truck"></i>
+            <h4>Доставка по Минской области</h4>
+            <p class="method-price">20 BYN</p>
+          </div>
+        </div>
+
+        <div class="free-delivery">
+          <i class="fas fa-gift"></i>
+          <span>Бесплатная доставка по Минску.</span>
+        </div>
+      </div>
+
+      <div class="delivery-info">
+        <div class="info-column">
+          <h3>Сроки доставки</h3>
+          <ul class="delivery-list">
+            <li>
+              <i class="fas fa-check"></i> Курьерская доставка по Минску — на
+              следующий день после оформления заказа
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-column">
+          <h3>Где мы доставляем?</h3>
+          <p>
+            Мы работаем в Минске и Минской области. Доставка осуществляется в
+            течении 1-2 дней.
+          </p>
+
+          <div class="important-note">
+            <i class="fas fa-exclamation-circle"></i>
+            <p>
+              <strong>Важно:</strong> Все товары отправляются только после
+              проверки комплектации и внешнего вида. При получении вы можете
+              осмотреть кондиционер перед оплатой.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews-section">
+    <div class="reviews-container">
+        <h2 class="hero-title animate-on-scroll">⭐ Отзывы наших клиентов</h2>
+        <div class="reviews-grid" id="reviewsGrid">
+            {% for review in reviews|slice:":3" %}
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"{{ review.description }}"</p>
+                <div class="review-author">— {{ review.name }} {{ review.surname }}</div>
+                <div class="review-tag">{{ review.created_at|date:"d.m.Y" }}</div>
+            </div>
+            {% empty %}
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"Отличный сервис! Установили кондиционер быстро и качественно. Очень доволен работой мастеров."</p>
+                <div class="review-author">— Алексей Петров</div>
+                <div class="review-tag">15.12.2024</div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"Профессиональный подход и внимательное отношение к клиенту. Рекомендую!"</p>
+                <div class="review-author">— Марина Сидорова</div>
+                <div class="review-tag">10.12.2024</div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if reviews.count > 3 %}
+        <div class="reviews-controls" id="reviewsControls">
+            <button class="show-more-btn" id="showMoreReviews">Показать ещё</button>
+            <button class="hide-all-btn" id="hideAllReviews" style="display: none;">Скрыть все</button>
+        </div>
+        {% endif %}
+
+        <div id="allReviewsData" style="display: none;">
+            {% for review in reviews %}
+            <div class="review-data" 
+                 data-name="{{ review.name }}"
+                 data-surname="{{ review.surname }}"
+                 data-description="{{ review.description }}"
+                 data-date="{{ review.created_at|date:'d.m.Y' }}">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="payment-section" id="payment-section">
+  <div class="payment-container">
+    <div class="payment-header">
+      <h2 class="payment-title">💳 Оплата</h2>
+      <p class="payment-subtitle">
+        На сайте uniterm.by вы можете легко и безопасно сделать заказ с оплатой
+        уже после приёма и установки кондиционера.
+      </p>
+    </div>
+
+    <div class="payment-content" style="user-select: none">
+      <div class="payment-methods">
+        <div class="payment-method">
+          <div class="method-icon">
+            <i class="fas fa-money-bill-wave"></i>
+            <span class="method-number">1</span>
+          </div>
+          <div class="method-info">
+            <h3>Наличными при получении</h3>
+            <p>Вы можете оплатить заказ наличными:</p>
+            <ul>
+              <li>Курьеру при доставке по Минску и области.</li>
+            </ul>
+            <p class="method-note">
+              Этот способ идеально подходит, если вы хотите осмотреть товар
+              перед оплатой. Оплата производится только после проверки
+              комплектации и внешнего вида кондиционера.
+            </p>
+          </div>
+        </div>
+        <div class="payment-method">
+          <div class="method-icon">
+            <i class="fas fa-credit-card"></i>
+            <span class="method-number">2</span>
+          </div>
+          <div class="method-info">
+            <h3>Банковской картой при получении</h3>
+            <p>Вы можете оплатить заказ картой:</p>
+            <ul>
+              <li>
+                Курьеру при доставке по Минску и области по пути, либо
+                заблаговременно связавшись с нами.
+              </li>
+            </ul>
+            <p class="method-note">
+              Этот способ подходит, если вы хотите заранее оплатить товар и не
+              задерживаться после получения.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="payment-support">
+        <div class="support-card">
+          <h3>Есть вопросы по оплате?</h3>
+          <div class="support-contacts">
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <p>Позвоните нам:</p>
+                <a href="tel:+375291234567" class="contact-link"
+                  >+375 (25) 543-51-82</a
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-comments"></i>
+              <div>
+                <p>Или напишите в онлайн-чат</p>
+                <span class="contact-info">— мы отвечаем 7 дней в неделю.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-section" id="about-section">
+  <div class="about-container">
+    <h2 class="hero-title animate-on-scroll">О нас</h2>
+
+    <div class="about-content">
+      <p class="about-intro">
+        В нашем интернет-магазине Uniterm.by можно купить кондиционер на любой бюджет и запрос.
+      </p>
+
+      <p>
+        У нас широкий выбор брендов сплит-систем на любой вкус.
+      </p>
+
+      <p>
+        Мы гарантируем приемлимые цены и качественные работы с гарантией.
+      </p>
+
+      <p>
+        В нашем магазине вы можете не только приобрести сплит-систему , но также и заказать установку и обслуживание кондиционера с высоким уровнем качества и сервиса.
+      </p>
+
+      <p>
+        Если вы ищете, где купить кондиционер для дома, квартиры или офиса в Минске и области по низкой стоимости, тогда вам к нам!
+      </p>
+
+      <div class="brands-section">
+        <h3>Работаем с брендами:</h3>
+        <div class="brands-scroll-container">
+          <div class="brands-scroll">
+            <div class="brands-grid">
+              <span class="brand-item">Daikin</span>
+              <span class="brand-item">Midea</span>
+              <span class="brand-item">Haier</span>
+              <span class="brand-item">Gree</span>
+              <span class="brand-item">LG</span>
+              <span class="brand-item">Samsung</span>
+              <span class="brand-item">Panasonic</span>
+              <span class="brand-item">Daikin</span>
+              <span class="brand-item">Midea</span>
+              <span class="brand-item">Haier</span>
+              <span class="brand-item">Gree</span>
+              <span class="brand-item">LG</span>
+              <span class="brand-item">Samsung</span>
+              <span class="brand-item">Panasonic</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="advantages-section">
+        <h3>Почему выбирают uniterm.by?</h3>
+        <div class="advantages-grid">
+          <div class="advantage-item">
+            <i class="fas fa-truck"></i>
+            <div>
+              <h4>Бесплатная доставка</h4>
+              <p>
+                Бесплатная доставка по Минску и быстрая доставка по Минской области.
+              </p>
+            </div>
+          </div>
+          <div class="advantage-item">
+            <i class="fas fa-tools"></i>
+            <div>
+              <h4>Профессиональный монтаж</h4>
+              <p>наши штатные мастера выполняют установку за 2–4 часа.</p>
+            </div>
+          </div>
+          <div class="advantage-item">
+            <i class="fas fa-shield-alt"></i>
+            <div>
+              <h4>Расширенная гарантия до 7 лет</h4>
+              <p>на все кондиционеры и монтаж.</p>
+            </div>
+          </div>
+          <div class="advantage-item">
+            <i class="fas fa-headset"></i>
+            <div>
+              <h4>Консультация бесплатно</h4>
+              <p>
+                наш менеджер поможет выбрать модель под площадь, бюджет и нужды.
+              </p>
+            </div>
+          </div>
+          <div class="advantage-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <h4>Работаем без выходных</h4>
+              <p>круглосуточный онлайн-чат и телефонная поддержка.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="location-section">
+        <h3>Где мы работаем?</h3>
+        <p>Мы обслуживаем клиентов по всей Беларуси.</p>
+        <p>
+          Доставка и монтаж осуществляются в течении 1-2 дней.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contacts-section" id="contacts-section">
+    <div class="contacts-container">
+        <div class="contacts-header">
+            <h2 class="contacts-title">📞 Контакты</h2>
+            <p class="contacts-subtitle">Вы можете связаться с нами по любому вопросу — мы ответим быстро и оперативно.</p>
+        </div>
+        
+        <div class="contacts-content" style="user-select: none;">
+            <div class="contacts-grid">
+                <div class="contact-methods">
+                    <h3>Способы связи</h3>
+                    
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>Телефон отдела продаж</h4>
+                            <a href="tel:+375 25 543 51 82" class="contact-link">+375 25 543 51 82</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>Email</h4>
+                            <a href="mailto:unitermby@mail.ru" class="contact-link">unitermby@mail.ru</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>Соц. сети</h4>
+                            <p>Напишите нам в Viber или Instagram</p>
+                            <div class="messenger-buttons">
+                                <a href="https://www.instagram.com/uniterm_minsk?igsh=ZTNranhzbnViOW1t" class="messenger-btn instagram" target="_blank">
+                                  <div class="instagram-icon">
+                                      <i class="fab fa-instagram"></i>
+                                  </div>Instagram</a>
+                                <a href="https://connect.viber.com/business/772653e2-9bd0-11f0-97fd-46fc2ffa8d57" class="messenger-btn viber" target="_blank">
+                                  <div class="viber-icon-link">
+                                      <i class="fab fa-viber"></i>
+                                  </div>Viber</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="working-hours">
+                    <h3>График работы</h3>
+                    <div class="schedule">
+                        <div class="schedule-item">
+                            <span class="days">Понедельник — пятница:</span>
+                            <span class="time">с 9:00 до 21:00</span>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="days">Суббота:</span>
+                            <span class="time">с 10:00 до 20:00</span>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="days">Воскресенье:</span>
+                            <span class="time">с 10:00 до 20:00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="viber-card">
+                        <div class="viber-icon">
+                            <i class="fab fa-viber"></i>
+                        </div>
+                        <h3>Онлайн-чат в Viber</h3>
+                        <a href="https://connect.viber.com/business/772653e2-9bd0-11f0-97fd-46fc2ffa8d57" class="viber-button">
+                            Перейти в чат
+                        </a>
+                    </div>
+                    
+                    <div class="round-the-clock">
+                        <i class="fas fa-clock"></i>
+                        <span>Заказы принимаются круглосуточно!</span>
+                    </div>
+                </div>
+                
+                <div class="requisites">
+                    <h3>Реквизиты</h3>
+                    <div class="requisites-info">
+                        <div class="requisite-item">
+                            <span class="requisite-label">ИП:</span>
+                            <span class="requisite-value">Леонтьев Андрей Игоревич</span>
+                        </div>
+                        <div class="requisite-item">
+                            <span class="requisite-label">УНП:</span>
+                            <span class="requisite-value">192604355</span>
+                        </div>
+                        <div class="requisite-item">
+                            <span class="requisite-label">Адрес:</span>
+                            <span class="requisite-value">220028 г. Минск, ул. Физкультурная, д. 18, к. 53</span>
+                        </div>
+                        <div class="requisite-item">
+                            <span class="requisite-label">Расчётный счёт:</span>
+                            <span class="requisite-value">BY16REDJ30131010211010000933</span>
+                        </div>
+                        <div class="requisite-item">
+                            <span class="requisite-label">Банк:</span>
+                            <span class="requisite-value">ЗАО «РРБ-Банк»</span>
+                        </div>
+                        <div class="requisite-item">
+                            <span class="requisite-label">Адрес банка:</span>
+                            <span class="requisite-value">220034, г. Минск, ул. Краснозвёздная, д. 18</span>
+                        </div>
+                        <div class="requisite-item">
+                            <span class="requisite-label">УНП банка:</span>
+                            <span class="requisite-value">100361187</span>
+                        </div>
+                        <div class="requisite-item">
+                            <span class="requisite-label">БИК:</span>
+                            <span class="requisite-value">REDJBY22</span>
+                        </div>
+                        <div class="requisite-item">
+                            <span class="requisite-label">Код:</span>
+                            <span class="requisite-value">110</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="availability-note">
+                <div class="availability-content">
+                    <i class="fas fa-calendar-check"></i>
+                    <div>
+                        <h4>Работаем без выходных</h4>
+                        <p>Наши менеджеры доступны каждый день с 9:00 до 21:00. Заказы через сайт принимаются 24/7 — вы можете оформить покупку в любое время.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="faq-section">
+  <div class="faq-container">
+    <h2 class="hero-title animate-on-scroll">❓ Часто задаваемые вопросы</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Сколько времени занимает установка?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>
+          Обычно 2–3 часа. Мы приезжаем в день заказа или на следующий день.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Можно ли оплатить после установки?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>Да, возможна оплата по факту — наличными или картой.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Работаете ли вы по выходным?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>Да, принимаем заказы 7 дней в неделю с 9:00 до 21:00.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal-overlay" id="quizModal">
+  <div class="modal-container">
+    <button class="modal-close" id="closeModal">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="quiz-progress">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span class="progress-text" id="progressText">1/5</span>
+    </div>
+
+    <div class="quiz-content">
+      <div class="quiz-page active" data-page="1">
+        <h2>Какая площадь помещения?</h2>
+        <div class="quiz-options">
+          <label class="quiz-option">
+            <input type="radio" name="area" value="15" />
+            <span>До 15 м² (малая комната)</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="area" value="20" />
+            <span>15-20 м² (комната)</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="area" value="25" />
+            <span>20-25 м² (гостиная)</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="area" value="35" />
+            <span>25-35 м² (большая комната)</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="area" value="50" />
+            <span>35-50 м² (офис/квартира)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-page" data-page="2">
+        <h2>Где планируете установить кондиционер?</h2>
+        <div class="quiz-options">
+          <label class="quiz-option">
+            <input type="radio" name="location" value="квартира" />
+            <span>Квартира</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="location" value="частный дом" />
+            <span>Частный дом</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="location" value="офис" />
+            <span>Офис</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="location" value="коммерция" />
+            <span>Магазин/кафе</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-page" data-page="3">
+        <h2>Какой уровень шума предпочитаете?</h2>
+        <div class="quiz-options">
+          <label class="quiz-option">
+            <input type="radio" name="noise" value="20" />
+            <span>Очень тихий (до 20 дБ)</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="noise" value="25" />
+            <span>Тихий (20-25 дБ)</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="noise" value="30" />
+            <span>Стандартный (25-30 дБ)</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="noise" value="40" />
+            <span>Не принципиально</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-page" data-page="4">
+        <h2>Какие функции важны?</h2>
+        <div class="quiz-options">
+          <label class="quiz-option">
+            <input type="checkbox" name="features" value="wifi" />
+            <span>Управление через Wi-Fi</span>
+          </label>
+          <label class="quiz-option">
+            <input type="checkbox" name="features" value="ionizer" />
+            <span>Ионизатор воздуха</span>
+          </label>
+          <label class="quiz-option">
+            <input type="checkbox" name="features" value="fresh_air" />
+            <span>Подмес свежего воздуха</span>
+          </label>
+          <label class="quiz-option">
+            <input type="checkbox" name="features" value="basic" />
+            <span>Только основные функции</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-page" data-page="5">
+        <h2>Ваш бюджет?</h2>
+        <div class="quiz-options">
+          <label class="quiz-option">
+            <input type="radio" name="budget" value="2000" />
+            <span>До 2000 BYN</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="budget" value="3000" />
+            <span>2000-3000 BYN</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="budget" value="4000" />
+            <span>3000-4000 BYN</span>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="budget" value="5000" />
+            <span>Свыше 4000 BYN</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="quiz-page" data-page="6">
+        <div class="results-content">
+          <h2>Мы подобрали для вас идеальные варианты</h2>
+          <p class="results-description">
+            На основе ваших предпочтений мы выбрали 3 лучших кондиционера
+          </p>
+
+          <div class="products-results" id="productsResults">
+            <div class="loading-spinner">
+              <i class="fas fa-spinner fa-spin"></i>
+              <p>Подбираем лучшие варианты...</p>
+            </div>
+          </div>
+
+          <div class="phone-section">
+            <p>
+              Оставьте телефон, и наш специалист свяжется с вами для уточнения
+              деталей
+            </p>
+            <div class="phone-input">
+              <input
+                type="tel"
+                id="phoneNumber"
+                placeholder="+375 (__) ___-__-__"
+                required
+              />
+            </div>
+            <button class="send-button" id="sendResults">
+              Получить консультацию
+            </button>
+            <p class="privacy-note">
+              Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-navigation">
+      <button class="quiz-btn prev-btn" id="prevBtn" style="display: none">
+        Назад
+      </button>
+      <button class="quiz-btn next-btn" id="nextBtn">Далее</button>
+    </div>
+  </div>
+</div>
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Сколько стоит установка кондиционера в Минске?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Стоимость установки кондиционера в Минске составляет от 200 BYN и зависит от сложности монтажа."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Какой кондиционер лучше для квартиры 30 м²?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Для квартиры 30 м² рекомендуем модели мощностью 9000-12000 BTU."
+        }
+      }
+    ]
+  }
+</script>
+<script src="{% static 'main/js/index.js' %}"></script>
+{% endblock %}

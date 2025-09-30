@@ -1,0 +1,507 @@
+.services-page {
+    padding: 2rem 0;
+    background-color: #151517;
+    min-height: 100vh;
+}
+
+.services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    user-select: none;
+}
+
+.services-content {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+}
+
+.filters-sidebar {
+    background: #222222;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    height: fit-content;
+    position: relative;
+    top: 2rem;
+}
+
+.filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #444;
+}
+
+.filters-header h3 {
+    color: #FAD532;
+    margin: 0;
+}
+
+.clear-filters {
+    color: #ff6b6b;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.clear-filters:hover {
+    text-decoration: underline;
+}
+
+.filter-group {
+    margin-bottom: 1.5rem;
+}
+
+.filter-title {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444;
+    border-radius: 0.25rem;
+    background: #333;
+    color: white;
+    font-size: 1rem;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #FAD532;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0.3rem 0;
+}
+
+.filter-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #FAD532;
+}
+
+.custom-solution {
+    background: linear-gradient(135deg, #2a2a2a, #333);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+    border: 1px solid #444;
+}
+
+.custom-solution h4 {
+    color: #FAD532;
+    margin-bottom: 0.8rem;
+}
+
+.custom-solution p {
+    color: #ccc;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.consultation-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #FAD532, #ff9800);
+    color: #333;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.consultation-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}
+
+.services-main {
+    background: #222222;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+.services-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #444;
+}
+
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: #ccc;
+}
+
+.sort-select {
+    padding: 0.5rem;
+    border: 1px solid #444;
+    border-radius: 0.25rem;
+    background: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.results-count {
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.service-card {
+    background: linear-gradient(135deg, #2a2a2a, #333);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    border: 1px solid #444;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-color: #FAD532;
+}
+
+
+
+.service-info {
+    text-align: center;
+}
+
+.service-title {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.service-description {
+    color: #ccc;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.service-duration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #FAD532;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.service-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FAD532;
+    margin-bottom: 1.5rem;
+}
+
+.service-actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.add-to-cart {
+    flex: 2;
+    background: linear-gradient(135deg, #FAD532, #ff9800);
+    color: #333;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}
+
+.details-btn {
+    flex: 1;
+    background: transparent;
+    color: #FAD532;
+    border: 1px solid #FAD532;
+    padding: 0.8rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.details-btn:hover {
+    background: #FAD532;
+    color: #333;
+}
+
+.no-services {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: #ccc;
+}
+
+.no-services h3 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.page-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #444;
+    background: #333;
+    color: #ccc;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.page-btn:hover:not(.disabled) {
+    border-color: #FAD532;
+    color: #FAD532;
+}
+
+.page-btn.active {
+    background: #FAD532;
+    color: #333;
+    border-color: #FAD532;
+}
+
+.page-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 968px) {
+    .services-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .filters-sidebar {
+        position: static;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .services-header h1 {
+        font-size: 2rem;
+    }
+    
+    .services-controls {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .service-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-container {
+        padding: 0 0.5rem;
+    }
+    
+    .services-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .filters-sidebar,
+    .services-main {
+        padding: 1rem;
+    }
+    
+    .service-card {
+        padding: 1rem;
+    }
+    
+    .service-title {
+        font-size: 1.1rem;
+    }
+    
+    .service-price {
+        font-size: 1.3rem;
+    }
+}
+
+
+.add-to-cart-form {
+    width: 100%;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-container {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.consultation-modal-content {
+    text-align: center;
+}
+
+.consultation-modal-icon {
+    font-size: 3rem;
+    color: #FAD532;
+    margin-bottom: 1rem;
+}
+
+.consultation-modal-content h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.consultation-modal-text {
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.consultation-modal-form {
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #FAD532;
+}
+
+.form-input textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.consultation-modal-button {
+    display: block;
+    background: linear-gradient(135deg, #FAD532, #FFA500);
+    color: #333;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s;
+    width: 100%;
+}
+
+.consultation-modal-button:hover {
+    transform: translateY(-2px);
+}
+
+.consultation-modal-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.consultation-modal-note {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 1rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    padding: 0.5rem;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .modal-container {
+        width: 95%;
+        padding: 1.5rem;
+    }
+    
+    .consultation-modal-content h2 {
+        font-size: 1.3rem;
+    }
+}
+

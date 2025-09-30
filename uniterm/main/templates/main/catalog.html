@@ -1,0 +1,218 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}Каталог кондиционеров в Минске | Цены и характеристики | Uniterm{% endblock %}
+
+{% block meta_description %}Каталог кондиционеров в Минске. ✅ Более 50 моделей сплит-систем от Daikin, TCL, Midea, Gree. Сравнение цен, технических характеристик. Помощь в выборе.{% endblock %}
+{% block link %}
+<link rel="stylesheet" href="{% static 'main/css/social_buttons.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="catalog-page">
+    <div class="catalog-container">
+        <button class="mobile-filters-toggle" id="mobileFiltersToggle">
+            <i class="fas fa-filter"></i>
+            Фильтры
+            <i class="fas fa-chevron-down" id="toggleIcon"></i>
+        </button>
+
+        <div class="catalog-content">
+            <aside class="filters-sidebar" id="filtersSidebar">
+                <div class="filters-header">
+                    <h3>Фильтры</h3>
+                    <div class="filters-header-actions">
+                        <a href="{% url 'catalog' %}" class="clear-filters">Сбросить</a>
+                        <button class="close-filters" id="closeFilters">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <form method="get" id="filter-form">
+                    <input type="hidden" name="sort" value="{{ current_filters.sort }}" id="sort-input">
+                    
+                    <div class="filter-group">
+                        <div class="filter-title">Цена, BYN</div>
+                        <div class="price-filter">
+                            <div class="price-inputs">
+                                <input type="number" name="min_price" placeholder="от {{ min_price_val|floatformat:0 }}" 
+                                       value="{{ current_filters.min_price }}" class="price-min">
+                                <span>-</span>
+                                <input type="number" name="max_price" placeholder="до {{ max_price_val|floatformat:0 }}" 
+                                       value="{{ current_filters.max_price }}" class="price-max">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-title">Бренд</div>
+                        <div class="filter-options">
+                            {% for brand in brands %}
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="brand" value="{{ brand.brand }}" 
+                                       {% if brand.brand in current_filters.brand %}checked{% endif %}>
+                                {{ brand.brand }}
+                                <span class="count">({{ brand.count }})</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-title">Страна</div>
+                        <div class="filter-options">
+                            {% for country in countries %}
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="country" value="{{ country.brand_country }}" 
+                                       {% if country.brand_country in current_filters.country %}checked{% endif %}>
+                                {{ country.brand_country }}
+                                <span class="count">({{ country.count }})</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-title">Цвет</div>
+                        <div class="filter-options">
+                            {% for color in colors %}
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="color" value="{{ color.color }}" 
+                                       {% if color.color in current_filters.color %}checked{% endif %}>
+                                {{ color.color }}
+                                <span class="count">({{ color.count }})</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-title">Тип компрессора</div>
+                        <div class="filter-options">
+                            {% for compressor in compressor_types %}
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="compressor" value="{{ compressor.compressor_type }}" 
+                                       {% if compressor.compressor_type in current_filters.compressor %}checked{% endif %}>
+                                {{ compressor.compressor_type }}
+                                <span class="count">({{ compressor.count }})</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-title">Гарантия</div>
+                        <div class="filter-options">
+                            {% for warranty in warranties %}
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="warranty" value="{{ warranty.warranty }}" 
+                                       {% if warranty.warranty in current_filters.warranty %}checked{% endif %}>
+                                {{ warranty.warranty }}
+                                <span class="count">({{ warranty.count }})</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="filter-actions">
+                        <button type="submit" class="apply-filters-btn">Применить фильтры</button>
+                    </div>
+
+                    <button type="submit" style="display: none;" id="filter-submit">Применить</button>
+                </form>
+            </aside>
+
+            <main class="products-main">
+                <div class="products-controls">
+                    {% if current_filters.search %}
+                    <div class="search-results-header">
+                        <h3>Результаты поиска для: "{{ current_filters.search }}"</h3>
+                        <a href="{% url 'catalog' %}" class="clear-search">×</a>
+                    </div>
+                    {% endif %}
+
+                    <div class="sort-controls">
+                        <span>Сортировка:</span>
+                        <select class="sort-select" id="sort-select">
+                            <option value="popular" {% if current_filters.sort == 'popular' %}selected{% endif %}>По популярности</option>
+                            <option value="price-asc" {% if current_filters.sort == 'price-asc' %}selected{% endif %}>По возрастанию цены</option>
+                            <option value="price-desc" {% if current_filters.sort == 'price-desc' %}selected{% endif %}>По убыванию цены</option>
+                            <option value="new" {% if current_filters.sort == 'new' %}selected{% endif %}>Сначала новинки</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="products-grid grid-view">
+                    {% for product in products %}
+                    <a href="{% url 'product_detail' product.id %}" class="product-link">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                                <div class="product-badges">
+                                    {% if product.original %}
+                                    <span class="badge original">Оригинал</span>
+                                    {% endif %}
+                                    {% if product.quantity > 0 %}
+                                    <span class="badge stock">В наличии</span>
+                                    {% else %}
+                                    <span class="badge not-stock">Нет в наличии</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">{{ product.name }}</h3>
+                                <div class="product-specs">
+                                    <span>{{ product.brand }}</span> • 
+                                    <span>{{ product.square }} м²</span>
+                                </div>
+                                <div class="product-price">
+                                    <span class="current-price">{{ product.price }} BYN</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart">Подробнее</button>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    {% empty %}
+                    <div class="no-products">
+                        <h3>Товары не найдены</h3>
+                        <p>Попробуйте изменить параметры фильтрации</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if products.has_other_pages %}
+                <div class="pagination">
+                    {% if products.has_previous %}
+                    <a href="?{% include 'main/includes/pagination_params.html' with page=products.previous_page_number %}" class="page-btn prev">← Назад</a>
+                    {% else %}
+                    <span class="page-btn prev disabled">← Назад</span>
+                    {% endif %}
+
+                    {% for i in products.paginator.page_range %}
+                        {% if products.number == i %}
+                        <span class="page-btn active">{{ i }}</span>
+                        {% else %}
+                        <a href="?{% include 'main/includes/pagination_params.html' with page=i %}" class="page-btn">{{ i }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if products.has_next %}
+                    <a href="?{% include 'main/includes/pagination_params.html' with page=products.next_page_number %}" class="page-btn next">Вперед →</a>
+                    {% else %}
+                    <span class="page-btn next disabled">Вперед →</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/imask"></script>
+<script src="{% static 'main/js/main.js' %}"></script>
+<script src="{% static 'main/js/catalog.js' %}"></script>
+{% endblock %}

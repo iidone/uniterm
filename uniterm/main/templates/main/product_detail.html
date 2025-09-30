@@ -1,0 +1,203 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+    {{ product.name }} - Uniterm
+{% endblock %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'main/css/social_buttons.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/product_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="product-detail-page">
+    <div class="product-detail-container">
+        <div class="product-gallery">
+            <div class="main-image">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" id="main-product-image">
+            </div>
+            {% if product.quantity > 0 %}
+            <div class="availability-badge in-stock">В наличии</div>
+            {% else %}
+            <span class="availability-badge not-stock">Нет в наличии</span>
+            {% endif %}
+        </div>
+
+        <div class="product-info">
+            <h1 class="product-title">{{ product.name }}</h1>
+            <div class="product-article">Артикул: {{ product.article }}</div>
+            
+            <div class="product-price-section">
+                <div class="price">{{ product.price }} BYN</div>
+                {% if product.original %}
+                <div class="original-badge">Оригинал</div>
+                {% endif %}
+            </div>
+
+            <div class="product-actions">
+                {% csrf_token %}
+                <div class="quantity-controls">
+                    <button class="quantity-btn minus">-</button>
+                    <input type="number" class="quantity-input" value="1" min="1" max="99" 
+                           {% if in_cart %}value="{{ cart_quantity }}"{% endif %}>
+                    <button class="quantity-btn plus">+</button>
+                </div>
+
+                {% if product.quantity > 0 %}
+                    <button class="add-to-cart-btn" data-product-id="{{ product.id }}">
+                        {% if in_cart %}✓ В корзине{% else %}Добавить в корзину{% endif %}
+                    </button>
+                {% else %}
+                    <button class="add-to-cart-btn" disabled>
+                        Нет в наличии
+                    </button>
+                {% endif %}
+            </div>
+
+            <div class="delivery-info">
+                <div class="info-item">
+                    <i class="fas fa-truck"></i>
+                    <span>Бесплатная доставка по Минску</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Гарантия: {{ product.warranty }}</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>Установка за 1-2 день</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-tabs">
+        <div class="tabs-header">
+            <button class="tab-btn active" data-tab="description">Описание</button>
+            <button class="tab-btn" data-tab="specifications">Характеристики</button>
+            <button class="tab-btn" data-tab="delivery">Доставка и установка</button>
+        </div>
+
+        <div class="tabs-content">
+            <div class="tab-pane active" id="description">
+                <div class="tab-content">
+                    <h3>Описание товара</h3>
+                    {% if product.description %}
+                        <p>{{ product.description }}</p>
+                    {% else %}
+                        <p>Описание товара скоро будет добавлено.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="tab-pane" id="specifications">
+                <div class="tab-content">
+                    <h3>Технические характеристики</h3>
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <span class="spec-label">Бренд:</span>
+                            <span class="spec-value">{{ product.brand }}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Производитель:</span>
+                            <span class="spec-value">{{ product.manufacturer }}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Страна бренда:</span>
+                            <span class="spec-value">{{ product.brand_country }}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Цвет:</span>
+                            <span class="spec-value">{{ product.color }}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Площадь помещения:</span>
+                            <span class="spec-value">{{ product.square }} м²</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Тип компрессора:</span>
+                            <span class="spec-value">{{ product.compressor_type }}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Уровень шума:</span>
+                            <span class="spec-value">{{ product.noise_level }} дБа</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Габариты (В×Ш×Г):</span>
+                            <span class="spec-value">{{ product.get_dimensions }}</span>
+                        </div>
+                        {% if product.wifi %}
+                        <div class="spec-item">
+                            <span class="spec-label">Wi-Fi:</span>
+                            <span class="spec-value">Есть</span>
+                        </div>
+                        {% endif %}
+                        {% if product.ionizer %}
+                        <div class="spec-item">
+                            <span class="spec-label">Ионизатор:</span>
+                            <span class="spec-value">Есть</span>
+                        </div>
+                        {% endif %}
+                        {% if product.fresh_air_mix %}
+                        <div class="spec-item">
+                            <span class="spec-label">Подмес свежего воздуха:</span>
+                            <span class="spec-value">Есть</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="delivery">
+                <div class="tab-content">
+                    <h3>Доставка и установка</h3>
+                    <div class="delivery-info">
+                        <div class="delivery-item">
+                            <i class="fas fa-truck"></i>
+                            <div>
+                                <h4>Бесплатная доставка</h4>
+                                <p>По Минску и 20 BYN по области</p>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <i class="fas fa-wrench"></i>
+                            <div>
+                                <h4>Профессиональная установка</h4>
+                                <p>Опытные мастера установят кондиционер за 2-4 часа</p>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <h4>Гарантия на работы</h4>
+                                <p>Предоставляем гарантию до 5 лет на установку</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if similar_products %}
+    <div class="similar-products">
+        <h2>Похожие товары</h2>
+        <div class="similar-grid">
+            {% for similar_product in similar_products %}
+            <div class="similar-product-card">
+                <a href="{% url 'product_detail' similar_product.id %}">
+                    <img src="{{ similar_product.image.url }}" alt="{{ similar_product.name }}">
+                    <h4>{{ similar_product.name }}</h4>
+                    <div class="price">{{ similar_product.price }} BYN</div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+<script src="https://unpkg.com/imask"></script>
+<script src="{% static 'main/js/main.js' %}"></script>
+<script src="{% static 'main/js/product_detail.js' %}"></script>
+{% endblock %}

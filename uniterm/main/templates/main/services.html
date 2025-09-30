@@ -1,0 +1,130 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Услуги - Uniterm
+{% endblock %}
+{% block link %}
+<link rel="stylesheet" href="{% static 'main/css/social_buttons.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/catalog.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="catalog-page">
+    <div class="catalog-container">
+
+        <div class="catalog-content">
+            <aside class="filters-sidebar">
+                <div class="filters-header">
+                    <h3>Фильтры</h3>
+                    <a href="{% url 'services' %}" class="clear-filters">Сбросить</a>
+                </div>
+
+                <form method="get" id="filter-form">
+                    <input type="hidden" name="sort" value="{{ current_filters.sort }}" id="sort-input">
+                    
+                    <div class="filter-group">
+                        <div class="filter-title">Цена, BYN</div>
+                        <div class="price-filter">
+                            <div class="price-inputs">
+                                <input type="number" name="min_price" placeholder="от 100" 
+                                       value="{{ current_filters.min_price }}" class="price-min">
+                                <span>-</span>
+                                <input type="number" name="max_price" placeholder="до 14000" 
+                                       value="{{ current_filters.max_price }}" class="price-max">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" style="display: none;" id="filter-submit">Применить</button>
+                </form>
+            </aside>
+
+            <main class="products-main">
+                <div class="products-controls">
+                    <div class="sort-controls">
+                        <span>Сортировка:</span>
+                        <select class="sort-select" id="sort-select">
+                            <option value="name" {% if current_filters.sort == 'name' %}selected{% endif %}>По названию</option>
+                            <option value="price-asc" {% if current_filters.sort == 'price-asc' %}selected{% endif %}>По возрастанию цены</option>
+                            <option value="price-desc" {% if current_filters.sort == 'price-desc' %}selected{% endif %}>По убыванию цены</option>
+                            <option value="popular" {% if current_filters.sort == 'popular' %}selected{% endif %}>Популярные</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="products-grid grid-view">
+                    {% for service in services %}
+                    <div class="product-card">
+                        <div class="product-image service">
+                            {% if service.image %}
+                                <img src="{{ service.image.url }}" alt="{{ service.name }}">
+                            {% else %}
+                                <img src="{% static 'main/images/service-placeholder.jpg' %}" alt="{{ service.name }}">
+                            {% endif %}
+                            <div class="product-badges">
+                                {% if service.is_popular %}
+                                <span class="badge original">Популярная</span>
+                                {% endif %}
+                                <span class="badge stock">Всегда готовы</span>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">{{ service.name }}</h3>
+                            <div class="product-specs">
+                                <span>{{ service.category }}</span>
+                                {% if service.duration %}
+                                • <span>{{ service.duration }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">{{ service.price }} BYN</span>
+                            </div>
+                            <div class="product-actions">
+                                <form method="post" action="{% url 'add_service_to_cart' service.id %}" class="add-to-cart-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="add-to-cart">Добавить к заказу</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="no-products">
+                        <h3>Услуги не найдены</h3>
+                        <p>Попробуйте изменить параметры фильтрации</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if services.has_other_pages %}
+                <div class="pagination">
+                    {% if services.has_previous %}
+                    <a href="?{% include 'main/includes/pagination_params.html' with page=services.previous_page_number %}" class="page-btn prev">← Назад</a>
+                    {% else %}
+                    <span class="page-btn prev disabled">← Назад</span>
+                    {% endif %}
+
+                    {% for i in services.paginator.page_range %}
+                        {% if services.number == i %}
+                        <span class="page-btn active">{{ i }}</span>
+                        {% else %}
+                        <a href="?{% include 'main/includes/pagination_params.html' with page=i %}" class="page-btn">{{ i }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if services.has_next %}
+                    <a href="?{% include 'main/includes/pagination_params.html' with page=services.next_page_number %}" class="page-btn next">Вперед →</a>
+                    {% else %}
+                    <span class="page-btn next disabled">Вперед →</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/imask"></script>
+<script src="{% static 'main/js/main.js' %}"></script>
+<script src="{% static 'main/js/services.js' %}"></script>
+{% endblock %}

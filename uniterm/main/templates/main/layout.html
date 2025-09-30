@@ -1,0 +1,311 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token }}" />
+
+    {% block meta %}
+    <meta
+      name="description"
+      content="{% block meta_description %}Купить кондиционеры в Минске с установкой. Продажа и монтаж климатического оборудования. Гарантия до 7 лет. Бесплатная доставка по Минску.{% endblock %}"
+    />
+    <meta
+      name="keywords"
+      content="{% block meta_keywords %}кондиционеры Минск, купить кондиционер, установка кондиционеров, климатическое оборудование, сплит-системы{% endblock %}"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="ru" />
+    <meta name="geo.region" content="BY-MI" />
+    <meta name="geo.placename" content="Минск" />
+    <meta name="geo.position" content="53.904539;27.561524" />
+    <meta name="ICBM" content="53.904539, 27.561524" />
+
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="{% block og_title %}Uniterm - Кондиционеры в Минске с установкой{% endblock %}"
+    />
+    <meta
+      property="og:description"
+      content="{% block og_description %}Продажа и установка кондиционеров в Минске. Гарантия 7 лет. Бесплатная доставка.{% endblock %}"
+    />
+    <meta
+      property="og:image"
+      content="{% static 'main/images/og-image.jpg' %}"
+    />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:site_name" content="Uniterm" />
+    <meta property="og:locale" content="ru_BY" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="{% block twitter_title %}Uniterm - Кондиционеры в Минске{% endblock %}"
+    />
+    <meta
+      name="twitter:description"
+      content="{% block twitter_description %}Купить кондиционер с установкой в Минске. Лучшие цены.{% endblock %}"
+    />
+    <meta
+      name="twitter:image"
+      content="{% static 'main/images/og-image.jpg' %}"
+    />
+
+    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+
+    <link
+      rel="alternate"
+      hreflang="ru-by"
+      href="{{ request.build_absolute_uri }}"
+    />
+    <link
+      rel="alternate"
+      hreflang="ru"
+      href="{{ request.build_absolute_uri }}"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="{{ request.build_absolute_uri }}"
+    />
+    {% endblock %}
+
+    <title>
+      {% block title %}Uniterm - Кондиционеры в Минске{% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'main/css/social_buttons.css' %}"> 
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'main/images/IMG_2839.ico' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    {% block link %} {% endblock %}
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Uniterm",
+        "description": "Продажа и установка кондиционеров в Минске",
+        "url": "https://uniterm.by",
+        "telephone": "+375-25-543-51-82",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Минск",
+          "addressCountry": "BY"
+        },
+        "openingHours": "Mo-Su 09:00-21:00",
+        "priceRange": "$$"
+      }
+    </script>
+  </head>
+  <body>
+    {% csrf_token %}
+<header>
+    <div class="header-top">
+        <div class="logo">
+            <a href="/" class="{% if request.path == '/' %}active{% endif %}">
+                UNITERM
+            </a>
+        </div>
+        <div class="search-bar">
+            <form method="get" action="{% url 'catalog' %}" id="search-form">
+                <input
+                    type="search"
+                    name="search"
+                    placeholder="Поиск..."
+                    id="search-input"
+                    value="{{ request.GET.search }}"
+                />
+                <button type="submit" style="display: none">Искать</button>
+            </form>
+        </div>
+        <div class="phone-number">+375 (25) 543-51-82</div>
+        <div class="header-icons">
+            <a
+                href="/cart/"
+                class="{% if request.path == '/cart/' %}active{% endif %}"
+            >
+                <button class="icon-button cart-button">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Корзина</span>
+                    {% if cart_total_quantity and cart_total_quantity > 0 %}
+                    <span class="cart-counter">{{ cart_total_quantity }}</span>
+                    {% endif %}
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <nav class="header-nav desktop-nav">
+        <ul class="nav-list">
+            <li>
+                <a href="/" class="{% if request.path == '/' %}active{% endif %}"
+                    >Главная</a
+                >
+            </li>
+            <li>
+                <a
+                    href="/catalog/"
+                    class="{% if request.path == '/catalog/' %}active{% endif %}"
+                    >Каталог</a
+                >
+            </li>
+            <li>
+                <a
+                    href="/services/"
+                    class="{% if request.path == '/services/' %}active{% endif %}"
+                    >Услуги</a
+                >
+            </li>
+            <li><a href="/#about-section">О нас</a></li>
+            <li><a href="/#delivery-section">Доставка</a></li>
+            <li><a href="/#payment-section">Оплата</a></li>
+            <li><a href="/#contacts-section">Контакты</a></li>
+        </ul>
+    </nav>
+</header>
+
+<nav class="mobile-bottom-nav">
+    <ul class="mobile-nav-list">
+        <li>
+            <a href="/" class="{% if request.path == '/' %}active{% endif %}">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+        </li>
+        <li>
+            <a href="/catalog/" class="{% if request.path == '/catalog/' %}active{% endif %}">
+                <i class="fas fa-th-large"></i>
+                <span>Каталог</span>
+            </a>
+        </li>
+        <li>
+            <a href="/services/" class="{% if request.path == '/services/' %}active{% endif %}">
+                <i class="fas fa-concierge-bell"></i>
+                <span>Услуги</span>
+            </a>
+        </li>
+        <li>
+            <a href="/#about-section">
+                <i class="fas fa-info-circle"></i>
+                <span>О нас</span>
+            </a>
+        </li>
+        <li>
+            <a href="/#delivery-section">
+                <i class="fas fa-truck"></i>
+                <span>Доставка</span>
+            </a>
+        </li>
+        <li>
+            <a href="/#payment-section">
+                <i class="fas fa-credit-card"></i>
+                <span>Оплата</span>
+            </a>
+        </li>
+        <li>
+            <a href="/#contacts-section">
+                <i class="fas fa-phone"></i>
+                <span>Контакты</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<div class="modal-overlay" id="returnModal">
+  <div class="modal-container return-modal">
+    <button class="modal-close" id="closeReturnModal">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="return-modal-content">
+      <div class="return-modal-icon">
+        <i class="fas fa-percentage"></i>
+      </div>
+
+      <h2>Нашли дешевле?</h2>
+
+      <p class="return-modal-text">
+        Оставьте нам заявку и мы предложим вам лучшую цену!
+      </p>
+
+      <div class="return-modal-form">
+        <div class="form-group">
+          <input
+            type="text"
+            id="returnName"
+            placeholder="Ваше имя"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="tel"
+            id="returnPhone"
+            placeholder="+375 (__) ___-__-__"
+            class="form-input"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            id="returnProduct"
+            placeholder="Какой товар вас интересует?"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            id="returnPrice"
+            placeholder="Найденная цена (BYN)"
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <button class="return-modal-button" id="sendReturnRequest">
+        <i class="fas fa-bolt"></i>
+        Получить лучшее предложение
+      </button>
+
+      <p class="return-modal-note">
+        Мы свяжемся с вами с персональным предложением
+      </p>
+    </div>
+  </div>
+</div>
+<div class="social-buttons">
+    <a href="https://www.instagram.com/uniterm_minsk?igsh=ZTNranhzbnViOW1t" class="social-btn instagram" target="_blank">
+        <div class="social-icon">
+            <i class="fab fa-instagram"></i>
+        </div>
+    </a>
+    <a href="https://connect.viber.com/business/772653e2-9bd0-11f0-97fd-46fc2ffa8d57" class="social-btn viber" target="_blank">
+        <div class="social-icon">
+            <i class="fab fa-viber"></i>
+        </div>
+    </a>
+</div>
+    {% block content %} {% endblock %}
+
+    <footer></footer>
+
+    <script src="https://unpkg.com/imask"></script>
+    <script src="{% static 'main/js/main.js' %}"></script>
+
+    {% block scripts %} {% endblock %}
+  </body>
+</html>

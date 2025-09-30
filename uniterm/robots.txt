@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /create-*
+
+Sitemap: https://uniterm.by/sitemap.xml

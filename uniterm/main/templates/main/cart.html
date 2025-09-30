@@ -1,0 +1,189 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Корзина - Uniterm
+{% endblock %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'main/css/cart.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/social_buttons.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="cart-page">
+    <div class="cart-container">
+        <h1 class="cart-title">Корзина покупок</h1>
+        
+        {% if cart_items %}
+        <div class="cart-content">
+            <div class="cart-items">
+                {% for item in cart_items %}
+                <div class="cart-item">
+                    {% if item.product %}
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="item-image">
+                    <div class="item-info">
+                        <h4>{{ item.product.name }}</h4>
+                        <p class="item-type">Товар • {{ item.product.brand }}</p>
+                        <p class="item-article">Артикул: {{ item.product.article }}</p>
+                    </div>
+                    {% elif item.service %}
+                    <div class="item-icon">🔧</div>
+                    <div class="item-info">
+                        <h4>{{ item.service.name }}</h4>
+                        <p class="item-type">Услуга • {{ item.service.category }}</p>
+                        {% if item.service.duration %}
+                        <p class="item-duration">Длительность: {{ item.service.duration }}</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    <div class="item-price">{{ item.total_price }} BYN</div>
+
+                    {% if item.product %}
+                    <div class="quantity-controls">
+                        <form method="post" action="{% url 'update_cart_item' item.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="decrease">
+                            <button type="submit" class="quantity-btn minus">-</button>
+                        </form>
+                        <span class="quantity">{{ item.quantity }}</span>
+                        <form method="post" action="{% url 'update_cart_item' item.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="increase">
+                            <button type="submit" class="quantity-btn plus">+</button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <div class="quantity-controls">
+                        <span class="quantity">1</span>
+                    </div>
+                    {% endif %}
+
+                    <form method="post" action="{% url 'remove_from_cart' item.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="remove-item">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="cart-summary">
+                <div class="summary-card">
+                    <h3>Итого</h3>
+                    <div class="summary-row">
+                        <span>Товары ({{ cart.total_quantity }})</span>
+                        <span>{{ cart.total_price }} BYN</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Доставка</span>
+                        <span class="free-delivery">Бесплатно</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row total">
+                        <span>Общая сумма</span>
+                        <span>{{ cart.total_price }} BYN</span>
+                    </div>
+                    <button class="checkout-btn" id="checkoutBtn">
+                        Оформить заказ
+                    </button>
+                    <a href="/catalog/" class="continue-shopping {% if request.path == '/catalog/' %}active{% endif %}">
+                        В каталог
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <h2>Корзина пуста</h2>
+            <p>Добавьте товары в корзину, чтобы продолжить покупки</p>
+            <a href="/catalog/" class="continue-shopping {% if request.path == '/catalog/' %}active{% endif %}">
+                В каталог
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-container order-modal">
+            <button class="modal-close" id="closeOrderModal">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="order-modal-content">
+                <h2>Оформление заказа</h2>
+
+                <div class="order-items">
+                    <h3>Ваш заказ</h3>
+                    <div class="order-items-list" id="orderItemsList">
+                        {% for item in cart_items %}
+                        <div class="order-item">
+                            {% if item.product %}
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                            <div class="order-item-info">
+                                <h4>{{ item.product.name }}</h4>
+                                <p>{{ item.quantity }} × {{ item.product.price }} BYN</p>
+                            </div>
+                            <span class="order-item-total">{{ item.total_price }} BYN</span>
+                            {% elif item.service %}
+                            <div class="order-item-icon">🔧</div>
+                            <div class="order-item-info">
+                                <h4>{{ item.service.name }}</h4>
+                                <p>Услуга</p>
+                            </div>
+                            <span class="order-item-total">{{ item.service.price }} BYN</span>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="order-total">
+                        <strong>Итого: {{ cart.total_price }} BYN</strong>
+                    </div>
+                </div>
+
+                <form id="orderForm" class="order-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="orderPhone">Номер телефона</label>
+                        <input type="tel" id="orderPhone" name="phone" placeholder="+375 (__) ___-__-__" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orderComment">Комментарий к заказу</label>
+                        <textarea id="orderComment" name="comment" placeholder="Дополнительные пожелания..." class="form-textarea"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-order-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        Отправить заказ
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+const urls = {
+    catalog: "{% url 'catalog' %}",
+    home: "{% url 'home' %}"
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    var phoneElement = document.getElementById('orderPhone');
+    if (phoneElement && typeof IMask !== 'undefined') {
+        var maskOptions = {
+            mask: '+{375} (00) 000-00-00',
+            lazy: false
+        };
+        var mask = IMask(phoneElement, maskOptions);
+    }
+});
+</script>
+<script src="https://unpkg.com/imask"></script>
+<script src="{% static 'main/js/main.js' %}"></script>
+<script src="{% static 'main/js/cart.js' %}"></script>
+{% endblock %}
