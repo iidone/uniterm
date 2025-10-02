@@ -49,7 +49,11 @@ class Products(models.Model):
     
     def __str__(self):
         return f"{self.name} ({self.article})"
-    
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('product_detail', args=[self.pk])
+
     def get_dimensions(self):
         if all([self.height, self.width, self.depth]):
             return f"{self.height}x{self.width}x{self.depth}"
@@ -77,6 +81,10 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('services') + f'#{self.slug}'
     
 
 

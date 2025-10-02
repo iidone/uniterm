@@ -4,7 +4,7 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.sitemaps.views import sitemap
-from .views import StaticSitemap, ProductSitemap, ServiceSitemap
+from .views import StaticSitemap, ProductSitemap
 
 
 urlpatterns = [
@@ -25,5 +25,5 @@ urlpatterns = [
     path('create-order/', views.create_order, name='create_order'),
     path('create-price-request/', views.create_price_request, name='create_price_request'),
     path('create-quiz-request/', views.create_quiz_request, name='create_quiz_request'),
-    path('sitemap.xml', sitemap, {'sitemaps': {'static': StaticSitemap, 'products': ProductSitemap, 'services': ServiceSitemap}}, name='sitemap'),
+    path('sitemap.xml', sitemap, {'sitemaps': {'static': StaticSitemap, 'products': ProductSitemap}}, name='sitemap'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
