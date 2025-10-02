@@ -4,8 +4,13 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.sitemaps.views import sitemap
-from .views import StaticSitemap, ProductSitemap
+from django.views.generic import TemplateView
+from ..sitemaps import StaticSitemap, ProductSitemap
 
+sitemaps = {
+    'static': StaticSitemap,
+    'products': ProductSitemap,
+}
 
 urlpatterns = [
     path("", views.index, name='home'),
@@ -26,4 +31,5 @@ urlpatterns = [
     path('create-price-request/', views.create_price_request, name='create_price_request'),
     path('create-quiz-request/', views.create_quiz_request, name='create_quiz_request'),
     path('sitemap.xml', sitemap, {'sitemaps': {'static': StaticSitemap, 'products': ProductSitemap}}, name='sitemap'),
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
