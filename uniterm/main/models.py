@@ -8,7 +8,6 @@ def product_image_path(instance, filename):
 
 class Products(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название")
-    article = models.CharField(max_length=100, verbose_name="Артикул")
     availability = models.BooleanField(default=True, verbose_name="В наличии")
     quantity = models.IntegerField(default=0, verbose_name="Количество")
     description = models.TextField(max_length=2000, blank=True, verbose_name="Описание")
@@ -36,7 +35,7 @@ class Products(models.Model):
     width = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Ширина, см")
     depth = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Глубина, см")
 
-    noise_level = models.IntegerField(verbose_name="Уровень шума, дБа")
+    noise_level = models.CharField(verbose_name="Уровень шума, дБа")
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")

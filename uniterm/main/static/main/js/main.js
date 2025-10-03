@@ -47,7 +47,12 @@ function initReturnModal() {
     const returnModal = document.getElementById('returnModal');
     const closeReturnModal = document.getElementById('closeReturnModal');
     const sendReturnRequest = document.getElementById('sendReturnRequest');
-    
+
+    if (localStorage.getItem('returnModalClosed') === 'true') {
+        console.log('Modal was previously closed by user');
+        return;
+    }
+
     if (!returnModal || !closeReturnModal || !sendReturnRequest) {
         console.log('Modal elements not found');
         return;
@@ -89,6 +94,8 @@ function initReturnModal() {
     function closeReturnModalFunc() {
         returnModal.classList.remove('active');
         document.body.style.overflow = 'auto';
+
+        localStorage.setItem('returnModalClosed', 'true');
     }
 
     closeReturnModal.addEventListener('click', closeReturnModalFunc);
@@ -106,6 +113,7 @@ function initReturnModal() {
             lazy: false
         });
     }
+
     sendReturnRequest.addEventListener('click', function(event) {
         event.preventDefault();
 
@@ -154,9 +162,11 @@ function initReturnModal() {
 
             if (data.success) {
                 showNotification('Спасибо! Мы свяжемся с вами с лучшим предложением!', 'success');
+
+                localStorage.setItem('returnModalClosed', 'true');
+                
                 setTimeout(() => {
                     closeReturnModalFunc();
-
                     document.getElementById('returnName').value = '';
                     document.getElementById('returnPhone').value = '';
                     document.getElementById('returnProduct').value = '';

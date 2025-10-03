@@ -1,6 +1,6 @@
 from django.urls import reverse
 from django.contrib.sitemaps import Sitemap
-from uniterm.main.models import Products, Service
+from main.models import Products, Service
 
 
 class StaticSitemap(Sitemap):
